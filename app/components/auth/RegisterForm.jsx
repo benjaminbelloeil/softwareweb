@@ -17,7 +17,7 @@ export default function RegisterForm() {
           <input
             type={field.includes('password') ? 'password' : field === 'email' ? 'email' : 'text'}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm text-gray-900 dark:text-white transition-all duration-200"
-            placeholder={`Enter your ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
+            placeholder={`${field.replace(/([A-Z])/g, ' $1').toLowerCase().replace(/^\w/, c => c.toUpperCase())}`}
             required
           />
         </motion.div>

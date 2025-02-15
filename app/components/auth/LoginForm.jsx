@@ -1,12 +1,22 @@
 import { motion } from 'framer-motion'
 
 export default function LoginForm() {
+  const inputVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (custom) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.1, duration: 0.5 }
+    })
+  }
+
   return (
     <form className="space-y-6">
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
+        variants={inputVariants}
+        initial="hidden"
+        animate="visible"
+        custom={1}
         className="space-y-2"
       >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -15,15 +25,16 @@ export default function LoginForm() {
         <input
           type="email"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm text-gray-900 dark:text-white transition-all duration-200"
-          placeholder="Enter your email"
+          placeholder="Email"
           required
         />
       </motion.div>
       
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        variants={inputVariants}
+        initial="hidden"
+        animate="visible"
+        custom={2}
         className="space-y-2"
       >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -32,12 +43,16 @@ export default function LoginForm() {
         <input
           type="password"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm text-gray-900 dark:text-white transition-all duration-200"
-          placeholder="Enter your password"
+          placeholder="Password"
           required
         />
       </motion.div>
 
       <motion.button
+        variants={inputVariants}
+        initial="hidden"
+        animate="visible"
+        custom={3}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         type="submit"
