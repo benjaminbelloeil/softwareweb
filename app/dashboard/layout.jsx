@@ -14,7 +14,11 @@ export default function DashboardLayout({ children }) {
     }
   }, [user, loading, router])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-screen">
+      
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

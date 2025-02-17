@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
 
   const login = (email, password) => {
     if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-      const userData = { email, name: 'Benjamin!' }
+      const userData = { email, name: 'Benjamin' }
       setUser(userData)
       localStorage.setItem('user', JSON.stringify(userData))
       setError('')
