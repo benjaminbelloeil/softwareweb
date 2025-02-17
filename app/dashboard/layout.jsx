@@ -5,16 +5,16 @@ import { useEffect } from 'react'
 import Sidebar from '../components/dashboard/Sidebar'
 
 export default function DashboardLayout({ children }) {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       router.push('/')
     }
-  }, [user, router])
+  }, [user, loading, router])
 
-  if (!user) return null
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

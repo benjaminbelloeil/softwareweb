@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 const AuthContext = createContext({})
@@ -11,12 +11,24 @@ const VALID_CREDENTIALS = {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const router = useRouter()
 
+  useEffect(() => {
+    // Keep user logged in if they refresh the page
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+    setLoading(false)
+  }, [])
+
   const login = (email, password) => {
     if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-      setUser({ email, name: 'Benjamin!' })
+      const userData = { email, name: 'Benjamin!' }
+      setUser(userData)
+      localStorage.setItem('user', JSON.stringify(userData))
       setError('')
       router.push('/dashboard')
     } else {
@@ -26,17 +38,20 @@ export function AuthProvider({ children }) {
   }
 
   const register = (name, email, password) => {
-    setUser({ email, name })
+    const userData = { name, email }
+    setUser(userData)
+    localStorage.setItem('user', JSON.stringify(userData))
     router.push('/dashboard')
   }
 
   const logout = () => {
     setUser(null)
+    localStorage.removeItem('user')
     router.push('/')
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, error }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, register, error }}>
       {children}
     </AuthContext.Provider>
   )
