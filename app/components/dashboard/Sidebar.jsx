@@ -3,9 +3,29 @@ import { motion } from 'framer-motion'
 import { FiHome, FiSettings, FiUser, FiLogOut } from 'react-icons/fi'
 import NavItem from './NavItem'
 import { useAuth } from '@/app/context/AuthContext'
+import { usePathname } from 'next/navigation'
 
 export default function Sidebar() {
   const { logout } = useAuth()
+  const pathname = usePathname()
+
+  const navItems = [
+    {
+      icon: <FiHome />,
+      text: 'Home',
+      href: '/dashboard',
+    },
+    {
+      icon: <FiUser />,
+      text: 'Profile',
+      href: '/dashboard/profile',
+    },
+    {
+      icon: <FiSettings />,
+      text: 'Settings',
+      href: '',
+    },
+  ]
 
   return (
     <motion.nav 
@@ -19,9 +39,15 @@ export default function Sidebar() {
         </h2>
       </div>
       <div className="px-4">
-        <NavItem icon={<FiHome />} text="Home" active />
-        <NavItem icon={<FiUser />} text="Profile" />
-        <NavItem icon={<FiSettings />} text="Settings" />
+        {navItems.map((item) => (
+          <NavItem
+            key={item.href}
+            icon={item.icon}
+            text={item.text}
+            href={item.href}
+            active={pathname === item.href}
+          />
+        ))}
         <NavItem 
           icon={<FiLogOut />} 
           text="Logout" 

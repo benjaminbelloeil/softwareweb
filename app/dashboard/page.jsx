@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import DashboardCard from '../components/dashboard/DashboardCard'
-import Head from 'next/head'
 
 export default function Dashboard() {
   const { user } = useAuth()
