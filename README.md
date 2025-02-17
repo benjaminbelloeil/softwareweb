@@ -1,4 +1,4 @@
-# SoftwareWeb - Full-Stack Application`
+# SoftwareWeb - FullStack Application
 
 SoftwareWeb is a modern full-stack web application built with **Next.js**, **Vercel Authentication**, **Vercel Database**, and enhanced **Network Security** for managing tasks, tracking performance, and enabling real-time collaboration.
 
