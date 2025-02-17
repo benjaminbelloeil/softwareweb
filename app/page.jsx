@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
+import Head from 'next/head'
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(true)
@@ -31,6 +32,11 @@ export default function Home() {
   }
 
   return (
+    <>
+    <Head>
+      <title>{isLogin ? 'Login - SoftwareWeb' : 'Register - SoftwareWeb'}</title>
+      <meta name="description" content="Welcome to SoftwareWeb. Please login or create an account." />
+    </Head>
     <main className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
       <div className="w-full max-w-md">
         <div className="backdrop-blur-lg bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-2xl p-8 border border-white/20 dark:border-gray-700/50 overflow-hidden">
@@ -66,5 +72,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </>
   )
 }
