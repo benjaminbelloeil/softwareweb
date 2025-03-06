@@ -50,7 +50,7 @@ export default function RegisterForm() {
             type={field.includes('password') ? 'password' : field === 'email' ? 'email' : 'text'}
             value={formData[field]}
             onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm text-gray-900 transition-all duration-200"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-accenture-purple focus:border-transparent bg-white/50 backdrop-blur-sm text-gray-900 transition-all duration-200"
             placeholder={`${field.replace(/([A-Z])/g, ' $1').toLowerCase().replace(/^\w/, c => c.toUpperCase())}`}
             required
           />
@@ -61,7 +61,7 @@ export default function RegisterForm() {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         type="submit"
-        className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200"
+        className="w-full py-3 px-4 bg-accenture-purple hover:bg-accenture-purple text-white font-medium rounded-xl shadow-lg shadow-accenture-purple/30 transition-all duration-200"
       >
         Create Account
       </motion.button>

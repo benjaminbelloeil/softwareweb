@@ -11,8 +11,8 @@ export default function NavItem({ icon, text, href, active, onClick }) {
       {...props}
       className={`flex items-center space-x-2 w-full px-4 py-3 mb-2 rounded-lg transition-colors ${
         active
-          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50'
+          ? 'bg-accenture-lightGray dark:bg-accenture-darkGray text-accenture-purple dark:text-accenture-white'
+          : 'text-accenture-black dark:text-accenture-gray hover:bg-accenture-gray dark:hover:bg-accenture-lightGray'
       }`}
     >
       <motion.div

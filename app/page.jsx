@@ -37,11 +37,11 @@ export default function Home() {
       <title>{isLogin ? 'Login - SoftwareWeb' : 'Register - SoftwareWeb'}</title>
       <meta name="description" content="Welcome to SoftwareWeb. Please login or create an account." />
     </Head>
-    <main className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
+    <main className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-accenture-gray to-accenture-lightGray dark:from-accenture-darkGray dark:to-accenture-black transition-colors duration-500">
       <div className="w-full max-w-md">
-        <div className="backdrop-blur-lg bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-2xl p-8 border border-white/20 dark:border-gray-700/50 overflow-hidden">
+        <div className="backdrop-blur-lg bg-accenture-white/80 dark:bg-accenture-darkGray/80 rounded-2xl shadow-2xl p-8 border border-accenture-white/20 dark:border-accenture-gray/50 overflow-hidden">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-accenture-purple to-accenture-black dark:from-accenture-purple dark:to-accenture-black bg-clip-text text-transparent">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h1>
           </div>
@@ -64,7 +64,7 @@ export default function Home() {
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full mt-6 py-3 px-4 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 font-medium rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-200"
+            className="w-full mt-6 py-3 px-4 border-2 border-accenture-purple dark:border-accenture-lightGray text-accenture-purple dark:text-accenture-lightGray font-medium rounded-xl hover:bg-accenture-lightGray dark:hover:bg-accenture-darkGray transition-all duration-200"
             onClick={() => setIsLogin(!isLogin)}
           >
             {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}

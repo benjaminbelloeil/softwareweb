@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 const AuthContext = createContext({})
 
 const VALID_CREDENTIALS = {
-  email: 'test@example.com',
-  password: 'password123'
+  email: 'benjaminbelloeil03@gmail.com',
+  password: 'benjamin'
 }
 
 export function AuthProvider({ children }) {
