@@ -5,7 +5,7 @@ export async function GET(request) {
   try {
     const searchParams = new URL(request.url).searchParams;
     const category = searchParams.get('category') || 'technology';
-    const language = searchParams.get('language') || 'en' || "es";
+    const language = searchParams.get('language') || 'en' || "es"; // both languages are supported
     const pageSize = searchParams.get('pageSize') || 30; 
     const searchQuery = searchParams.get('q') || '';
     

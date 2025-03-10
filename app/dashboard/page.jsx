@@ -251,12 +251,12 @@ export default function Dashboard() {
                                     pageNum === totalPages || 
                                     Math.abs(pageNum - currentPage) <= 1;
                                     
-                    // Show ellipsis after first page if needed
+                    // Show after first page if needed
                     if (pageNum === 2 && currentPage > 3) {
                       return <span key="ellipsis-1" className="mx-1">...</span>;
                     }
                     
-                    // Show ellipsis before last page if needed
+                    // Show before last page if needed
                     if (pageNum === totalPages - 1 && currentPage < totalPages - 2) {
                       return <span key="ellipsis-2" className="mx-1">...</span>;
                     }
