@@ -42,7 +42,7 @@ export default function Dashboard() {
     }
   }
 
-  // Debounce search query to avoid too many API calls
+  // Reduce search query to avoid too many API calls
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
@@ -56,7 +56,7 @@ export default function Dashboard() {
     const fetchNews = async () => {
       setLoading(true);
       try {
-        // Call our internal API route with search parameter if provided
+        // Call internal API route with search parameter
         const response = await axios.get('/api/news', {
           params: {
             category: 'technology',
@@ -79,7 +79,7 @@ export default function Dashboard() {
     fetchNews()
   }, [debouncedSearchQuery])
   
-  // Get current articles for pagination
+  // Get current articles for page
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = news.slice(indexOfFirstArticle, indexOfLastArticle);
@@ -234,113 +234,60 @@ export default function Dashboard() {
                   disabled={currentPage === 1}
                   className={`px-3 py-1.5 rounded-md border transition-colors ${
                     currentPage === 1
-                      ? 'text-gray-400 border-gray-300 dark:border-gray-700 cursor-not-allowed'
-                      : 'text-accenture-purple border-accenture-purple hover:bg-accenture-purple/10 dark:hover:bg-accenture-purple/20'
+                    ? 'text-gray-400 border-gray-300 dark:border-gray-700 cursor-not-allowed'
+                    : 'text-accenture-purple border-accenture-purple hover:bg-accenture-purple/10'
                   }`}
                 >
                   Prev
                 </button>
                 
                 <div className="flex items-center">
-                  {totalPages <= 5 ? (
-                    // Show all pages if 5 or fewer
-                    Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
-                      <button
-                        key={num}
-                        onClick={() => setCurrentPage(num)}
-                        className={`w-8 h-8 flex items-center justify-center rounded-md mx-1 ${
-                          currentPage === num
-                            ? 'bg-accenture-purple text-white'
-                            : 'text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
-                        }`}
-                      >
-                        {num}
-                      </button>
-                    ))
-                  ) : (
-                      // smart navigation for more than 5 pages
-                    <>
-                      <button
-                        onClick={() => setCurrentPage(1)}
-                        className={`w-8 h-8 flex items-center justify-center rounded-md mx-1 ${
-                          currentPage === 1
-                            ? 'bg-accenture-purple text-white'
-                            : 'text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
-                        }`}
-                      >
-                        1
-                      </button>
-                      
-                      {currentPage > 3 && <span className="mx-1">...</span>}
-                      
-                      {currentPage === totalPages && totalPages > 3 && (
+                  {/* Generate page buttons */}
+                  {[...Array(totalPages)].map((_, i) => {
+                    const pageNum = i + 1;
+                    
+                    // Always show first page, last page, current page and pages +/- 1 from current
+                    const showPage = pageNum === 1 || 
+                                    pageNum === totalPages || 
+                                    Math.abs(pageNum - currentPage) <= 1;
+                                    
+                    // Show ellipsis after first page if needed
+                    if (pageNum === 2 && currentPage > 3) {
+                      return <span key="ellipsis-1" className="mx-1">...</span>;
+                    }
+                    
+                    // Show ellipsis before last page if needed
+                    if (pageNum === totalPages - 1 && currentPage < totalPages - 2) {
+                      return <span key="ellipsis-2" className="mx-1">...</span>;
+                    }
+                    
+                    if (showPage) {
+                      return (
                         <button
-                          onClick={() => setCurrentPage(currentPage - 2)}
-                          className="w-8 h-8 flex items-center justify-center rounded-md mx-1 text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          key={pageNum}
+                          onClick={() => setCurrentPage(pageNum)}
+                          className={`w-8 h-8 flex items-center justify-center rounded-md mx-1 ${
+                            currentPage === pageNum
+                              ? 'bg-accenture-purple text-white'
+                              : 'text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                          }`}
                         >
-                          {currentPage - 2}
+                          {pageNum}
                         </button>
-                      )}
-                      
-                      {currentPage > 2 && (
-                        <button
-                          onClick={() => setCurrentPage(currentPage - 1)}
-                          className="w-8 h-8 flex items-center justify-center rounded-md mx-1 text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                        >
-                          {currentPage - 1}
-                        </button>
-                      )}
-                      
-                      {currentPage !== 1 && currentPage !== totalPages && (
-                        <button
-                          onClick={() => setCurrentPage(currentPage)}
-                          className="w-8 h-8 flex items-center justify-center rounded-md mx-1 bg-accenture-purple text-white"
-                        >
-                          {currentPage}
-                        </button>
-                      )}
-                      
-                      {currentPage < totalPages - 1 && (
-                        <button
-                          onClick={() => setCurrentPage(currentPage + 1)}
-                          className="w-8 h-8 flex items-center justify-center rounded-md mx-1 text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                        >
-                          {currentPage + 1}
-                        </button>
-                      )}
-                      
-                      {currentPage === 1 && totalPages > 3 && (
-                        <button
-                          onClick={() => setCurrentPage(currentPage + 2)}
-                          className="w-8 h-8 flex items-center justify-center rounded-md mx-1 text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                        >
-                          {currentPage + 2}
-                        </button>
-                      )}
-                      
-                      {currentPage < totalPages - 2 && <span className="mx-1">...</span>}
-                      
-                      <button
-                        onClick={() => setCurrentPage(totalPages)}
-                        className={`w-8 h-8 flex items-center justify-center rounded-md mx-1 ${
-                          currentPage === totalPages
-                            ? 'bg-accenture-purple text-white'
-                            : 'text-accenture-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
-                        }`}
-                      >
-                        {totalPages}
-                      </button>
-                    </>
-                  )}
+                      );
+                    }
+                    
+                    return null;
+                  })}
                 </div>
-
+                
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages || totalPages === 0}
                   className={`px-3 py-1.5 rounded-md border transition-colors ${
                     currentPage === totalPages || totalPages === 0
-                      ? 'text-gray-400 border-gray-300 dark:border-gray-700 cursor-not-allowed'
-                      : 'text-accenture-purple border-accenture-purple hover:bg-accenture-purple/10 dark:hover:bg-accenture-purple/20'
+                    ? 'text-gray-400 border-gray-300 dark:border-gray-700 cursor-not-allowed'
+                    : 'text-accenture-purple border-accenture-purple hover:bg-accenture-purple/10'
                   }`}
                 >
                   Next
