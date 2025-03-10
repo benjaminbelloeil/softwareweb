@@ -5,15 +5,30 @@ export async function GET(request) {
   try {
     const searchParams = new URL(request.url).searchParams;
     const category = searchParams.get('category') || 'technology';
-    const language = searchParams.get('language') || 'en';
-    const pageSize = searchParams.get('pageSize') || 8;
+    const language = searchParams.get('language') || 'en' || "es";
+    const pageSize = searchParams.get('pageSize') || 30; 
+    const searchQuery = searchParams.get('q') || '';
     
-    const response = await axios.get('https://newsapi.org/v2/top-headlines', {
-      params: {
-        category,
+    let endpoint = 'top-headlines';
+    let params = {
+      category,
+      language,
+      pageSize,
+    };
+    
+    // If there's a search query, use the everything endpoint
+    if (searchQuery) {
+      endpoint = 'everything';
+      params = {
+        q: searchQuery,
         language,
         pageSize,
-      },
+        sortBy: 'publishedAt'
+      };
+    }
+    
+    const response = await axios.get(`https://newsapi.org/v2/${endpoint}`, {
+      params,
       headers: {
         'X-Api-Key': process.env.NEXT_PUBLIC_NEWS_API_KEY 
       }
