@@ -130,7 +130,7 @@ export default function Dashboard() {
             <div className="relative w-full md:w-64">
               <input
                 type="text"
-                placeholder="Search news..."
+                placeholder="Search news by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 py-2 rounded-lg border border-accenture-gray dark:border-accenture-darkGray bg-white dark:bg-accenture-black text-accenture-black dark:text-accenture-white focus:outline-none focus:ring-2 focus:ring-accenture-purple"

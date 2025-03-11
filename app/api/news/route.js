@@ -5,7 +5,7 @@ export async function GET(request) {
   try {
     const searchParams = new URL(request.url).searchParams;
     const category = searchParams.get('category') || 'technology';
-    const language = searchParams.get('language') || 'en' || "es"; // both languages are supported
+    const language = searchParams.get('language') || 'en';
     const pageSize = searchParams.get('pageSize') || 30; 
     const searchQuery = searchParams.get('q') || '';
     
@@ -16,11 +16,11 @@ export async function GET(request) {
       pageSize,
     };
     
-    // If there's a search query, use the everything endpoint
+    // If there's a search query, use the everything endpoint and search in title
     if (searchQuery) {
       endpoint = 'everything';
       params = {
-        q: searchQuery,
+        qInTitle: searchQuery, // Changed from q to qInTitle to search only in titles
         language,
         pageSize,
         sortBy: 'publishedAt'
