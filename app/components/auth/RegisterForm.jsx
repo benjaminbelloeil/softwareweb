@@ -9,12 +9,28 @@ export default function RegisterForm() {
     password: '',
     confirmPassword: ''
   })
+  const [passwordError, setPasswordError] = useState('')
   const { register, error } = useAuth()
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    const updatedData = { ...formData, [name]: value }
+    setFormData(updatedData)
+    
+    // Validate password matching in real-time
+    if (name === 'confirmPassword' || name === 'password') {
+      if (updatedData.confirmPassword && updatedData.password !== updatedData.confirmPassword) {
+        setPasswordError("Passwords do not match")
+      } else {
+        setPasswordError("")
+      }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match")
+      setPasswordError("Passwords do not match")
       return
     }
     register(formData.name, formData.email, formData.password)
@@ -47,10 +63,19 @@ export default function RegisterForm() {
             {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
           </label>
           <input
-            type={field.includes('password') ? 'password' : field === 'email' ? 'email' : 'text'}
+            type={field === 'password' || field === 'confirmPassword' ? 'password' : field === 'email' ? 'email' : 'text'}
             value={formData[field]}
-            onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-accenture-purple focus:border-transparent bg-white/50 backdrop-blur-sm text-gray-900 transition-all duration-200"
+            onChange={handleChange}
+            name={field}
+            className={`w-full px-4 py-3 rounded-xl border 
+              ${(field === 'password' || field === 'confirmPassword') && passwordError 
+                ? 'border-red-500 ring-1 ring-red-500 shadow-sm shadow-red-300' 
+                : 'border-gray-200'} 
+              focus:ring-2 
+              ${(field === 'password' || field === 'confirmPassword') && passwordError 
+                ? 'focus:ring-red-400 focus:border-red-500' 
+                : 'focus:ring-accenture-purple focus:border-transparent'} 
+              bg-white/50 backdrop-blur-sm text-gray-900 transition-all duration-200`}
             placeholder={`${field.replace(/([A-Z])/g, ' $1').toLowerCase().replace(/^\w/, c => c.toUpperCase())}`}
             required
           />

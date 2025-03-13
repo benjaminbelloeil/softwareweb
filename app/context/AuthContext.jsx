@@ -1,13 +1,9 @@
 'use client'
 import { createContext, useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { initializeUsers, verifyCredentials, addUser } from './users'
 
 const AuthContext = createContext({})
-
-const VALID_CREDENTIALS = {
-  email: 'benjaminbelloeil03@gmail.com',
-  password: 'benjamin'
-}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -16,6 +12,9 @@ export function AuthProvider({ children }) {
   const router = useRouter()
 
   useEffect(() => {
+    // Initialize users database
+    initializeUsers()
+    
     // Keep user logged in if they refresh the page
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
@@ -25,8 +24,9 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = (email, password) => {
-    if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-      const userData = { email, name: 'Benjamin' }
+    const userData = verifyCredentials(email, password)
+    
+    if (userData) {
       setUser(userData)
       localStorage.setItem('user', JSON.stringify(userData))
       setError('')
@@ -38,10 +38,20 @@ export function AuthProvider({ children }) {
   }
 
   const register = (name, email, password) => {
-    const userData = { name, email }
-    setUser(userData)
-    localStorage.setItem('user', JSON.stringify(userData))
-    router.push('/dashboard')
+    try {
+      const newUser = addUser({ name, email, password })
+      
+      // Remove password before storing in state
+      const { password: _, ...safeUserData } = newUser
+      
+      setUser(safeUserData)
+      localStorage.setItem('user', JSON.stringify(safeUserData))
+      setError('')
+      router.push('/dashboard')
+    } catch (err) {
+      setError(err.message)
+      setTimeout(() => setError(''), 3000)
+    }
   }
 
   const logout = () => {
