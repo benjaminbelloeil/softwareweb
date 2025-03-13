@@ -37,6 +37,7 @@ export default function LoginForm() {
       variants={formVariants}
       initial="hidden"
       animate="visible"
+      exit={{ opacity: 0, y: -10 }}
       onSubmit={handleSubmit}
     >
       {error && (
