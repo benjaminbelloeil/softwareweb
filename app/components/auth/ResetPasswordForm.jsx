@@ -20,16 +20,6 @@ export default function ResetPasswordForm({ onBack }) {
       })
       setIsSubmitting(false)
     }, 1000)
-    
-    // In a real application, we would call the auth service:
-    // try {
-    //   await authService.resetPassword(email);
-    //   setStatus({ type: 'success', message: 'Password reset instructions sent!' });
-    // } catch (error) {
-    //   setStatus({ type: 'error', message: error.message });
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
   }
 
   const formVariants = {
